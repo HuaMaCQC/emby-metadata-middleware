@@ -1,15 +1,15 @@
-// import * as createError from 'http-errors';
+import createError from 'http-errors';
 import express from 'express';
-// import * as cookieParser from 'cookie-parser'; // cookie 解析
-import * as logger from 'morgan'; // 紀錄
-import embyRouter from './routes/emby.js';
+import cookieParser from 'cookie-parser'; // cookie 解析logger
+import logger from 'morgan'; // 紀錄
+import embyRouter from './routes/emby';
 
 const app = express();
 
-// app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use('/emby', embyRouter);
 // app.use(express.static(path.join(__dirname, 'public'))); // 調用靜態文件
 
@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 });
 
 // 錯誤處理器
-app.use(function(err, req, res, next) {
+app.use((err: any, req: any, res: any) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
